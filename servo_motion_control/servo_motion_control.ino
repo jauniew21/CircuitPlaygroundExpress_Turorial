@@ -2,13 +2,19 @@
 #include <Servo.h>
 
 float X, Y, Z;
-Servo my_servo;
-int pwm_pin = 9; // A2 pin
-int cur_servo_val = 0;
+Servo servo_x;
+Servo servo_y;
+int pin_x = 9; // A2 pin for servo x
+int pin_y = 6; // A1 pin for servo y
+int cur_servo_val_x = 0;
+int cur_servo_val_y = 0;
 
 void setup() {
   CircuitPlayground.begin();
-  my_servo.attach(pwm_pin);
+  servo_x.attach(pin_x);
+  servo_y.attach(pin_y);
+  servo_x.write(0);
+  servo_y.write(0);
   Serial.begin(9600);
 }
 
@@ -19,30 +25,34 @@ void loop() {
 
   if (X > 1) {
     for (int i = 0; i < 5; i++) CircuitPlayground.setPixelColor(i, 0, 255, 0);
+    for (int i = 0; i < 20; i++) {
+      servo_x.write(cur_servo_val_x + i);
+      delay(15);
+    } cur_servo_val_x += 20;
   } else if (X < 0) {
     for (int i = 0; i < 5; i++) CircuitPlayground.setPixelColor(i, 255, 0, 0);
+    for (int i = 0; i < 20; i++) {
+      servo_x.write(cur_servo_val_x - i);
+      delay(15);
+    } cur_servo_val_x -= 20;
   } else {
     for (int i = 0; i < 5; i++) CircuitPlayground.setPixelColor(i, 0, 0, 255);
   }
 
   if (Y > 1) {
     for (int i = 5; i < 10; i++) CircuitPlayground.setPixelColor(i, 0, 255, 0);
+    for (int i = 0; i < 20; i++) {
+      servo_y.write(cur_servo_val_y + i);
+      delay(15);
+    } cur_servo_val_y += 20;
   } else if (Y < 0) {
     for (int i = 5; i < 10; i++) CircuitPlayground.setPixelColor(i, 255, 0, 0);
+    for (int i = 0; i < 20; i++) {
+      servo_y.write(cur_servo_val_y - i);
+      delay(15);
+    } cur_servo_val_y -= 20;
   } else {
     for (int i = 5; i < 10; i++) CircuitPlayground.setPixelColor(i, 0, 0, 255);
-  }
-
-  if (Z > 1) {
-    for (int i = 2; i < 10; i = i + 5) CircuitPlayground.setPixelColor(i, 0, 255, 0);
-    for (int i = 0; i <= 180; i++) {
-      my_servo.write(i);
-      delay(15);
-    }
-  } else if (Z < 0) {
-    for (int i = 2; i < 10; i = i + 5) CircuitPlayground.setPixelColor(i, 255, 0, 0);
-  } else {
-    for (int i = 2; i < 10; i = i + 5) CircuitPlayground.setPixelColor(i, 0, 0, 255);
   }
 
   delay(1000);
