@@ -1,7 +1,9 @@
+// finnicky, does not always function as expected
+
 #include <Adafruit_CircuitPlayground.h>
 #include <Servo.h>
 
-float X, Y, Z;
+float X, Y;
 Servo servo_x;
 Servo servo_y;
 int pin_x = 9; // A2 pin for servo x
@@ -21,7 +23,6 @@ void setup() {
 void loop() {
   X = CircuitPlayground.motionX();
   Y = CircuitPlayground.motionY();
-  Z = CircuitPlayground.motionZ();
 
   if (X > 1) {
     for (int i = 0; i < 5; i++) CircuitPlayground.setPixelColor(i, 0, 255, 0);
